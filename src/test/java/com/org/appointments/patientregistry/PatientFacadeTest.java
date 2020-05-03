@@ -16,7 +16,7 @@ class PatientFacadeTest {
     private PatientFacade facade;
 
     @BeforeEach
-    public void reset() {
+    void reset() {
         this.facade = patientConfiguration.patientService();
     }
 
