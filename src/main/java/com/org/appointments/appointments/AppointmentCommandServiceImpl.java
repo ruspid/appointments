@@ -4,7 +4,7 @@ import com.org.appointments.appointments.dto.AppointmentDto;
 import com.org.appointments.appointments.dto.AppointmentFormDto;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDateTime;
+import javax.persistence.EntityNotFoundException;
 
 @RequiredArgsConstructor
 public class AppointmentCommandServiceImpl implements AppointmentCommandService {
@@ -17,17 +17,29 @@ public class AppointmentCommandServiceImpl implements AppointmentCommandService 
     }
 
     @Override
-    public AppointmentDto rescheduleAppointment(LocalDateTime newDate, String id) {
+    public AppointmentDto rescheduleAppointment(RescheduleAppointmentApplication dto) {
         return null;
     }
 
     @Override
-    public void cancelAppointment(String id) {
-
+    public void cancelAppointment(CancelAppointmentApplication application) {
+        Appointment appointment = appointmentsRepository.readAppointment(application.appointmentId)
+                .orElseThrow(EntityNotFoundException::new);
+        if (!canCancelAppointment(appointment, application)) throw new RuntimeException();
+        appointmentsRepository.cancelAppointment(appointment.getAppointmentId());
     }
 
-    @Override
-    public AppointmentDto readAppointment(String id) {
-        return null;
+    private boolean canCancelAppointment(Appointment appointment, CancelAppointmentApplication application) {
+        if(application.applicant.equals(Applicant.PATIENT)) return isPatient(appointment, application);
+        return isPartOfOrganization(appointment, application);
     }
+
+    private boolean isPartOfOrganization(Appointment appointment, CancelAppointmentApplication application) {
+        return appointment.getDoctorId().equals(application.getApplicantId());
+    }
+
+    private boolean isPatient(Appointment appointment, CancelAppointmentApplication application) {
+        return appointment.getPatientId().equals(application.applicantId);
+    }
+
 }

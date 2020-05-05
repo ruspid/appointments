@@ -48,6 +48,11 @@ class InMemoryRepository implements AppointmentsRepository, AppointmentQueryRepo
         return new PageImpl<>(appointmentsPage, pageable, appointments.size());
     }
 
+    @Override
+    public List<AppointmentDto> patientAppointments(String id) {
+        return null;
+    }
+
 
     @Override
     public Page<AppointmentDto> patientAppointments(String id, Pageable pageable) {

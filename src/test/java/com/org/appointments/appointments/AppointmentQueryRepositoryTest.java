@@ -4,7 +4,6 @@ import com.org.appointments.appointments.dto.AppointmentDto;
 import com.org.appointments.appointments.dto.AppointmentFormDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
