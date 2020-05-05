@@ -16,3 +16,13 @@ public interface AppointmentQueryRepository {
 
 
 }
+
+
+/*
+Możesz mieć z tyłu głowy iż w przyszłości chcielibyśmy w tej domenie wspierać grafiki pracy
+(w jakich godzinach lekarz przyjmuje)  i
+ jak domyślnie sloty wizyt się rozkładają by np. w aplikacji pacjenta można było umawiać wizytę).
+
+ Wsparcie dla pakietów wizyt i wydarzeń cyklicznych – np. rehabilitacja trwająca 10 wizyt.
+Te dwa ostatnie punkty daję bardziej w celu pokazania iż potencjalnie ta domena się będzie rozrastać i nadać kierunek gdzie może się rozrastać.
+ */
