@@ -45,7 +45,7 @@ class InMemoryRepository implements AppointmentsRepository, AppointmentQueryRepo
                 .skip(numberOfRecordsToSkip(pageable))
                 .limit(pageable.getOffset())
                 .collect(Collectors.toList());
-        return new PageImpl<>(appointmentsPage, pageable, appointmentsPage.size());
+        return new PageImpl<>(appointmentsPage, pageable, appointments.size());
     }
 
 
@@ -58,7 +58,7 @@ class InMemoryRepository implements AppointmentsRepository, AppointmentQueryRepo
                 .skip(numberOfRecordsToSkip(pageable))
                 .limit(pageable.getOffset())
                 .collect(Collectors.toList());
-        return new PageImpl<>(appointmentsPage, pageable, appointmentsPage.size());
+        return new PageImpl<>(appointmentsPage, pageable, appointments.size());
     }
 
     private boolean patientAppointmentPredicate(Appointment appointment, String id) {
