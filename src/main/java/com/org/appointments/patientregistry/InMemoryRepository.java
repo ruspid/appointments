@@ -36,6 +36,24 @@ class InMemoryRepository implements PatientRepository, PatientQueryRepository{
     }
 
     @Override
+    public Page<PatientDto> searchPatients(String searchParam, Pageable pageable) {
+        List<PatientDto> patientPage = patientRecords.values()
+                .stream()
+                .filter(patient -> match(patient, searchParam))
+                .map(Patient::dto)
+                .skip(computeNumberOfRecordsToBeSkipped(pageable))
+                .limit(pageable.getOffset())
+                .collect(Collectors.toList());
+        return new PageImpl<>(patientPage, pageable, pageable.getOffset());
+    }
+
+    private boolean match(Patient patient, String searchParam) {
+        String param = searchParam.toLowerCase();
+        return (patient.firstName.toLowerCase().contains(param) || patient.secondName.toLowerCase().contains(param));
+
+    }
+
+    @Override
     public Page<PatientDto> readAllPatients(Pageable pageable) {
         List<PatientDto> patientPage = patientRecords.values()
                 .stream()
@@ -47,7 +65,7 @@ class InMemoryRepository implements PatientRepository, PatientQueryRepository{
     }
 
     private long computeNumberOfRecordsToBeSkipped(Pageable pageable) {
-        return pageable.getPageNumber() * pageable.getPageSize();
+        return (pageable.getPageNumber()-1) * pageable.getPageSize();
     }
 
 

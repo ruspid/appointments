@@ -10,10 +10,10 @@ class Patient {
 
     @Getter
     @Setter
-    private String id;
-    private String firstName;
-    private String secondName;
-    private String address;
+    String id;
+    String firstName;
+    String secondName;
+    String address;
 
     PatientDto dto() {
         return PatientDto.builder().id(id)
