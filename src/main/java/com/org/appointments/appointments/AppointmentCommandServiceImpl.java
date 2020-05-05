@@ -17,8 +17,13 @@ public class AppointmentCommandServiceImpl implements AppointmentCommandService 
     }
 
     @Override
-    public AppointmentDto rescheduleAppointment(RescheduleAppointmentApplication dto) {
-        return null;
+    public AppointmentDto rescheduleAppointment(RescheduleAppointmentApplication application) {
+        Appointment appointment = appointmentsRepository.readAppointment(application.appointmentId)
+                .orElseThrow(EntityNotFoundException::new);
+        if (!canRescheduleAppointment(appointment, application)) throw new RuntimeException();
+        appointment.setAppointmentTime(application.getNewAppointmentTime());
+        appointmentsRepository.addAppointment(appointment);
+        return appointment.dto();
     }
 
     @Override
@@ -40,6 +45,21 @@ public class AppointmentCommandServiceImpl implements AppointmentCommandService 
 
     private boolean isPatient(Appointment appointment, CancelAppointmentApplication application) {
         return appointment.getPatientId().equals(application.applicantId);
+    }
+
+
+    private boolean isPartOfOrganization(Appointment appointment, RescheduleAppointmentApplication application) {
+        return appointment.getDoctorId().equals(application.getApplicantId());
+    }
+
+    private boolean isPatient(Appointment appointment, RescheduleAppointmentApplication application) {
+        return appointment.getPatientId().equals(application.applicantId);
+    }
+
+
+    private boolean canRescheduleAppointment(Appointment appointment, RescheduleAppointmentApplication application) {
+        if(application.applicant.equals(Applicant.PATIENT)) return isPatient(appointment, application);
+        return isPartOfOrganization(appointment, application);
     }
 
 }

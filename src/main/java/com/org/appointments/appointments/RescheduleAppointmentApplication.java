@@ -11,5 +11,6 @@ import java.time.LocalDateTime;
 class RescheduleAppointmentApplication{
     public String appointmentId;
     public Applicant applicant;
+    public String applicantId;
     public LocalDateTime newAppointmentTime;
 }
