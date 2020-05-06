@@ -1,6 +1,6 @@
-package com.org.appointments.patientregistry;
+package com.org.appointments.appointments;
 
-import com.org.appointments.patientregistry.dto.PatientRegistrationDto;
+import com.org.appointments.appointments.dto.AppointmentFormDto;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.time.LocalDateTime;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -17,40 +19,41 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class PatientQueryControllerITCase {
+class AppointmentQueryControllerITCase {
 
     @Autowired
     MockMvc mvc;
 
     @Autowired
-    PatientFacade patientFacade;
+    AppointmentCommandService commandService;
 
     @BeforeAll
     public void initTestData() {
-        patientFacade.registerPatient(new PatientRegistrationDto("John", "Wick", "NY"));
-        patientFacade.registerPatient(new PatientRegistrationDto("Wiz", "Cudi", "LA"));
-        patientFacade.registerPatient(new PatientRegistrationDto("Joyner", "Lucas", "AT"));
+        commandService.scheduleAppointment(new AppointmentFormDto("doctorId", "patientId", LocalDateTime.now()));
+        commandService.scheduleAppointment(new AppointmentFormDto("doctorId", "1", LocalDateTime.now()));
+        commandService.scheduleAppointment(new AppointmentFormDto("doctorId", "1", LocalDateTime.now()));
     }
 
     @Test
-    void shouldReturnPageOffAllPatients() throws Exception {
+    void shouldReturnPageOfPatientAppointments() throws Exception {
         //given - testData
-        //when
-        mvc.perform(MockMvcRequestBuilders.get("/patients"))
-                //then
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content", hasSize(3)));
-    }
 
-    @Test
-    void shouldReturnPageOfMatchingPatients() throws Exception {
-        //given - testData
         //when
-        mvc.perform(MockMvcRequestBuilders.get("/patients")
-                .param("q", "jo"))
+        mvc.perform(MockMvcRequestBuilders.get("/appointments")
+                .param("patient_id", "1"))
                 //then
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(2)));
+    }
+
+    @Test
+    void shouldReturnPageOfAllScheduledAppointments() throws Exception {
+        //given - testData
+        //when
+        mvc.perform(MockMvcRequestBuilders.get("/appointments"))
+                //then
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content", hasSize(3)));
     }
 
 

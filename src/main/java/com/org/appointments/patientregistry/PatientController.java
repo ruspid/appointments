@@ -20,9 +20,9 @@ class PatientController {
         return ResponseEntity.ok(patientFacade.searchPatient(id));
     }
 
-    @PostMapping("/patient")
+    @PostMapping("/patients")
     ResponseEntity<Void> registerPatient(@RequestBody PatientRegistrationDto dto) {
-        return ResponseEntity.created(URI.create("/patients/".concat(patientFacade.registerPatient(dto)))).build();
+        return ResponseEntity.created(URI.create("/patient/".concat(patientFacade.registerPatient(dto)))).build();
     }
 
     @DeleteMapping("/patients/{id}")
@@ -31,7 +31,7 @@ class PatientController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/patient")
+    @PutMapping("/patients")
     ResponseEntity<PatientDto> updatePatientRecord(@RequestBody PatientDto dto) {
         return ResponseEntity.ok(patientFacade.updatePatientRecord(dto));
     }

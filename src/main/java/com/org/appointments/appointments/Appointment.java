@@ -22,6 +22,7 @@ class Appointment {
         return AppointmentDto.builder()
                 .doctorId(doctorId)
                 .patientId(patientId)
+                .appointmentId(appointmentId)
                 .appointmentTime(appointmentTime)
                 .cabinetId(cabinetId)
                 .build();

@@ -10,13 +10,13 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-class AppointmentCommandController {
+class AppointmentCRUDController {
 
     private final AppointmentCommandService service;
 
     @PostMapping(value = "/appointments")
     ResponseEntity<Void> scheduleAppointment(@RequestBody AppointmentFormDto dto) {
-        return ResponseEntity.created(URI.create("/appointment/" + service.scheduleAppointment(dto))).build();
+        return ResponseEntity.created(URI.create("/appointments/" + service.scheduleAppointment(dto))).build();
     }
 
     @PutMapping(value = "/appointments")
@@ -30,7 +30,7 @@ class AppointmentCommandController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(value = "/appointment/{id}")
+    @GetMapping(value = "/appointments/{id}")
     ResponseEntity<AppointmentDto> readAppointment(@PathVariable String id){
         return ResponseEntity.ok(service.readAppointment(id));
     }

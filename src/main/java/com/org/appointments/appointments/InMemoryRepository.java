@@ -49,12 +49,6 @@ class InMemoryRepository implements AppointmentsRepository, AppointmentQueryRepo
     }
 
     @Override
-    public List<AppointmentDto> patientAppointments(String id) {
-        return null;
-    }
-
-
-    @Override
     public Page<AppointmentDto> patientAppointments(String id, Pageable pageable) {
         List<AppointmentDto> appointmentsPage = appointments.values()
                 .stream()
@@ -71,7 +65,7 @@ class InMemoryRepository implements AppointmentsRepository, AppointmentQueryRepo
     }
 
     private long numberOfRecordsToSkip(Pageable pageable) {
-        return pageable.getPageNumber() * pageable.getPageSize();
+        return (pageable.getPageNumber()-1) * pageable.getPageSize();
     }
 
     private String generateId() {

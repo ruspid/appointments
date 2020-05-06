@@ -26,8 +26,8 @@ class PatientQueryController {
     @GetMapping("/patients")
     ResponseEntity<Page<PatientDto>> readAllPatients(
             @RequestParam(value = "q", required = false) String q,
-            @RequestParam(value = "perPage", required = false) Integer perPage,
-            @RequestParam(value = "pageNum", required = false) Integer pageNum) {
+            @RequestParam(value = "page", required = false) Integer perPage,
+            @RequestParam(value = "size", required = false) Integer pageNum) {
         Pageable pageable = getPageable(perPage, pageNum);
         Page<PatientDto> patients = q == null ?
                 patientQueryRepository.readAllPatients(pageable)
