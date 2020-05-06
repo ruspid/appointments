@@ -10,7 +10,7 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-class AppointmentCRUDController {
+class AppointmentController {
 
     private final AppointmentFacade service;
 

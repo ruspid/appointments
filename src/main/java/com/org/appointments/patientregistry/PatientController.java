@@ -4,12 +4,11 @@ import com.org.appointments.patientregistry.dto.PatientDto;
 import com.org.appointments.patientregistry.dto.PatientRegistrationDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 class PatientController {
 
