@@ -43,7 +43,7 @@ class InMemoryRepository implements AppointmentsRepository, AppointmentQueryRepo
                 .stream()
                 .map(Appointment::dto)
                 .skip(numberOfRecordsToSkip(pageable))
-                .limit(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .collect(Collectors.toList());
         return new PageImpl<>(appointmentsPage, pageable, appointments.size());
     }
@@ -55,7 +55,7 @@ class InMemoryRepository implements AppointmentsRepository, AppointmentQueryRepo
                 .filter(a -> patientAppointmentPredicate(a, id))
                 .map(Appointment::dto)
                 .skip(numberOfRecordsToSkip(pageable))
-                .limit(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .collect(Collectors.toList());
         return new PageImpl<>(appointmentsPage, pageable, appointments.size());
     }
@@ -64,8 +64,10 @@ class InMemoryRepository implements AppointmentsRepository, AppointmentQueryRepo
         return appointment.getPatientId().equals(id);
     }
 
+    //in order to don't mess with 0-based pages
     private long numberOfRecordsToSkip(Pageable pageable) {
-        return (pageable.getPageNumber()-1) * pageable.getPageSize();
+        if(pageable.getPageNumber() == 1 || pageable.getPageNumber() == 0) return 0;
+        return pageable.getPageNumber() * pageable.getPageSize();
     }
 
     private String generateId() {

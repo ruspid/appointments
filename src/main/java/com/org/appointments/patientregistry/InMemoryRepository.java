@@ -42,7 +42,7 @@ class InMemoryRepository implements PatientRepository, PatientQueryRepository{
                 .filter(patient -> match(patient, searchParam))
                 .map(Patient::dto)
                 .skip(computeNumberOfRecordsToBeSkipped(pageable))
-                .limit(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .collect(Collectors.toList());
         return new PageImpl<>(patientPage, pageable, pageable.getOffset());
     }
@@ -59,13 +59,14 @@ class InMemoryRepository implements PatientRepository, PatientQueryRepository{
                 .stream()
                 .map(Patient::dto)
                 .skip(computeNumberOfRecordsToBeSkipped(pageable))
-                .limit(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .collect(Collectors.toList());
         return new PageImpl<>(patientPage, pageable, pageable.getOffset());
     }
 
     private long computeNumberOfRecordsToBeSkipped(Pageable pageable) {
-        return (pageable.getPageNumber()-1) * pageable.getPageSize();
+        if(pageable.getPageNumber() == 1 || pageable.getPageNumber() == 0) return 0;
+        return pageable.getPageNumber() * pageable.getPageSize();
     }
 
 
