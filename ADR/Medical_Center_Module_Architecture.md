@@ -6,6 +6,7 @@ Type of architecture for medical center module
 ## Decision Drivers
 
 * anemic data model
+* supportive sub domain
 * hidden implementation details  
 
 ## Considered Options

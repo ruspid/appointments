@@ -7,6 +7,7 @@ Type of architecture for medical center module
 
 * anemic data model
 * hidden implementation details 
+* supportive sub domain
 * expected additional view models  
 
 ## Considered Options
