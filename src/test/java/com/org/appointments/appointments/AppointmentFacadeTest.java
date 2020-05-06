@@ -29,6 +29,9 @@ class AppointmentFacadeTest {
         String appointmentId = appointmentFacade.scheduleAppointment(dto);
         //then
         Assertions.assertTrue(StringUtils.isNotBlank(appointmentId));
+        //and
+        AppointmentDto appointmentDto = appointmentFacade.readAppointment(appointmentId);
+        Assertions.assertTrue(StringUtils.isNotBlank(appointmentDto.cabinetId));
     }
 
     @Test

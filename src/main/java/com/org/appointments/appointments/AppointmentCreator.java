@@ -13,11 +13,12 @@ class AppointmentCreator {
                 .build();
     }
 
-    static Appointment from(AppointmentFormDto dto) {
+    static Appointment from(AppointmentFormDto dto, String cabinetId) {
         return Appointment.builder()
                 .doctorId(dto.doctorId)
                 .patientId(dto.patientId)
                 .appointmentTime(dto.appointmentTime)
+                .cabinetId(cabinetId)
                 .build();
     }
 }

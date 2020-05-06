@@ -2,12 +2,13 @@ package com.org.appointments.appointments.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NonNull;
 
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
 public class AppointmentFormDto {
-    public String doctorId;
-    public String patientId;
-    public LocalDateTime appointmentTime;
+    @NonNull public String doctorId;
+    @NonNull public String patientId;
+    @NonNull public LocalDateTime appointmentTime;
 }

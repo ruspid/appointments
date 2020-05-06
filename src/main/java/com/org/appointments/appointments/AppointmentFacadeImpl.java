@@ -8,10 +8,12 @@ import lombok.RequiredArgsConstructor;
 public class AppointmentFacadeImpl implements AppointmentFacade {
 
     private final AppointmentsRepository appointmentsRepository;
+    private final CabinetManager cabinetManager;
 
     @Override
     public String scheduleAppointment(AppointmentFormDto appointmentDto) {
-        return appointmentsRepository.addAppointment(AppointmentCreator.from(appointmentDto));
+        String cabinetId = cabinetManager.findCabinetForAppointment(appointmentDto.appointmentTime, appointmentDto.doctorId);
+        return appointmentsRepository.addAppointment(AppointmentCreator.from(appointmentDto, cabinetId));
     }
 
     @Override

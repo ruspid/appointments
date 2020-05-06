@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 class AppointmentsConfiguration {
 
     private final InMemoryRepository inmemoryRepository = new InMemoryRepository();
-
+    private CabinetManager cabinetManager = new RandomCabinetManager();
     @Bean
     AppointmentQueryRepository appointmentQueryRepository() {
         return inmemoryRepository;
@@ -15,7 +15,7 @@ class AppointmentsConfiguration {
 
     @Bean
     AppointmentFacade appointmentCommandService() {
-        return new AppointmentFacadeImpl(inmemoryRepository);
+        return new AppointmentFacadeImpl(inmemoryRepository, cabinetManager);
     }
 
 }
