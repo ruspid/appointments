@@ -49,7 +49,7 @@ class AppointmentCommandServiceTest {
         String doctorId = "id";
         String appointmentId = appointmentCommandService.scheduleAppointment(new AppointmentFormDto(doctorId, "p", LocalDateTime.now()));
         //when
-        appointmentCommandService.cancelAppointment(new CancelAppointmentApplication(appointmentId, Applicant.ORGANIZATION, doctorId));
+        appointmentCommandService.cancelAppointment(new CancelAppointmentApplication(appointmentId, Applicant.DOCTOR, doctorId));
         //then
         Assertions.assertTrue(appointmentQueryRepository.readAppointment(appointmentId).isEmpty());
     }
@@ -62,7 +62,7 @@ class AppointmentCommandServiceTest {
         String appointmentId = appointmentCommandService.scheduleAppointment(new AppointmentFormDto(doctorId, "p", LocalDateTime.now()));
         LocalDateTime newTime = LocalDateTime.now();
         //when
-        AppointmentDto appointmentDto = appointmentCommandService.rescheduleAppointment(new RescheduleAppointmentApplication(appointmentId, Applicant.ORGANIZATION, doctorId, newTime));
+        AppointmentDto appointmentDto = appointmentCommandService.rescheduleAppointment(new RescheduleAppointmentApplication(appointmentId, Applicant.DOCTOR, doctorId, newTime));
         //then
         Assertions.assertEquals(newTime, appointmentDto.getAppointmentTime());
     }

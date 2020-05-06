@@ -8,4 +8,6 @@ interface  AppointmentCommandService {
     String scheduleAppointment(AppointmentFormDto appointmentDto);
     AppointmentDto rescheduleAppointment(RescheduleAppointmentApplication dto);
     void cancelAppointment(CancelAppointmentApplication dto);
+    AppointmentDto readAppointment(String id);
+
 }
