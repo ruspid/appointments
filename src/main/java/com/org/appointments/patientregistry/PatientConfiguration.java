@@ -8,13 +8,9 @@ class PatientConfiguration {
 
     private final InMemoryRepository inMemoryRepository = new InMemoryRepository();
 
-    PatientFacade patientService() {
-        return patientService(inMemoryRepository);
-    }
-
     @Bean
-    PatientFacade patientService(PatientRepository patientRepository) {
-        return new PatientService(patientRepository);
+    PatientFacade patientService() {
+        return new PatientService(inMemoryRepository);
     }
 
     @Bean

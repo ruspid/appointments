@@ -8,25 +8,14 @@ class AppointmentsConfiguration {
 
     private final InMemoryRepository inmemoryRepository = new InMemoryRepository();
 
-
+    @Bean
     AppointmentQueryRepository appointmentQueryRepository() {
-        return appointmentQueryRepository(inmemoryRepository);
+        return inmemoryRepository;
     }
 
-
+    @Bean
     AppointmentCommandService appointmentCommandService() {
-        return appointmentCommandService(inmemoryRepository);
-    }
-
-    @Bean
-    AppointmentQueryRepository appointmentQueryRepository(AppointmentQueryRepository appointmentQueryRepository) {
-        return appointmentQueryRepository;
-    }
-
-
-    @Bean
-    AppointmentCommandService appointmentCommandService(AppointmentsRepository appointmentsRepository) {
-        return new AppointmentCommandServiceImpl(appointmentsRepository);
+        return new AppointmentCommandServiceImpl(inmemoryRepository);
     }
 
 }
