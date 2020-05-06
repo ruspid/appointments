@@ -8,14 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import javax.persistence.EntityNotFoundException;
-
 @Order(Ordered.LOWEST_PRECEDENCE)
 @ControllerAdvice
 class CentralExceptionControllerAdvice {
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    ResponseEntity<ErrorMessage> handleNotFoundFilms(EntityNotFoundException e) {
+    @ExceptionHandler(RuntimeException.class)
+    ResponseEntity<ErrorMessage> handleNotFoundFilms(RuntimeException e) {
         ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
         return new ResponseEntity(errorMessage, HttpStatus.NOT_FOUND);
     }

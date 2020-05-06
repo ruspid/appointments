@@ -4,8 +4,6 @@ import com.org.appointments.appointments.dto.AppointmentDto;
 import com.org.appointments.appointments.dto.AppointmentFormDto;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.EntityNotFoundException;
-
 @RequiredArgsConstructor
 public class AppointmentCommandServiceImpl implements AppointmentCommandService {
 
@@ -18,8 +16,7 @@ public class AppointmentCommandServiceImpl implements AppointmentCommandService 
 
     @Override
     public AppointmentDto rescheduleAppointment(RescheduleAppointmentApplication application) {
-        Appointment appointment = appointmentsRepository.readAppointment(application.appointmentId)
-                .orElseThrow(EntityNotFoundException::new);
+        Appointment appointment = getAppointmentById(application.appointmentId);
         if (!canRescheduleAppointment(appointment, application)) throw new RuntimeException();
         appointment.setAppointmentTime(application.getNewAppointmentTime());
         appointmentsRepository.addAppointment(appointment);
@@ -28,17 +25,19 @@ public class AppointmentCommandServiceImpl implements AppointmentCommandService 
 
     @Override
     public void cancelAppointment(CancelAppointmentApplication application) {
-        Appointment appointment = appointmentsRepository.readAppointment(application.appointmentId)
-                .orElseThrow(EntityNotFoundException::new);
+        Appointment appointment = getAppointmentById(application.appointmentId);
         if (!canCancelAppointment(appointment, application)) throw new RuntimeException();
         appointmentsRepository.cancelAppointment(appointment.getAppointmentId());
     }
 
     @Override
     public AppointmentDto readAppointment(String id) {
+        return getAppointmentById(id).dto();
+    }
+
+    private Appointment getAppointmentById(String id) {
         return appointmentsRepository.readAppointment(id)
-                .map(Appointment::dto)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new AppointmentNotFountException(id));
     }
 
     private boolean canCancelAppointment(Appointment appointment, CancelAppointmentApplication application) {

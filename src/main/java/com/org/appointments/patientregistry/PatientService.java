@@ -5,8 +5,6 @@ import com.org.appointments.patientregistry.dto.PatientDto;
 import com.org.appointments.patientregistry.dto.PatientRegistrationDto;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.EntityNotFoundException;
-
 @RequiredArgsConstructor
 class PatientService implements PatientFacade {
 
@@ -19,9 +17,13 @@ class PatientService implements PatientFacade {
 
     @Override
     public PatientDto searchPatient(String id) {
+        return getPatientById(id).dto();
+    }
+
+    private Patient getPatientById(String id) {
         return patientRepository.searchPatient(id)
-                .map(Patient::dto)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new PatientNotFoundException(id));
+
     }
 
     @Override

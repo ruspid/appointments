@@ -6,8 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
 
-import javax.persistence.EntityNotFoundException;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class PatientFacadeTest {
@@ -50,7 +48,7 @@ class PatientFacadeTest {
         //when
         facade.deletePatientRecord(patientId);
         //then
-        assertThrows(EntityNotFoundException.class, () -> facade.searchPatient(patientId));
+        assertThrows(PatientNotFoundException.class, () -> facade.searchPatient(patientId));
     }
 
     @Test

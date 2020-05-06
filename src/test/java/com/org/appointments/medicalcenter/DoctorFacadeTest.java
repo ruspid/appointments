@@ -2,16 +2,11 @@ package com.org.appointments.medicalcenter;
 
 import com.org.appointments.medicalcenter.dto.DoctorDto;
 import com.org.appointments.medicalcenter.dto.DoctorRegistrationDto;
-import com.org.appointments.patientregistry.dto.PatientDto;
-import com.org.appointments.patientregistry.dto.PatientRegistrationDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
 
-import javax.persistence.EntityNotFoundException;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DoctorFacadeTest {
 
@@ -61,7 +56,7 @@ class DoctorFacadeTest {
         //when
         doctorFacade.deleteDoctor(doctorId);
         //then
-        assertThrows(EntityNotFoundException.class, () -> doctorFacade.getDoctor(doctorId));
+        assertThrows(DoctorNotFoundException.class, () -> doctorFacade.getDoctor(doctorId));
     }
 
     @Test

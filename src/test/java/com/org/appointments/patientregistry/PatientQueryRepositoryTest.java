@@ -2,8 +2,12 @@ package com.org.appointments.patientregistry;
 
 import com.org.appointments.patientregistry.dto.PatientDto;
 import com.org.appointments.patientregistry.dto.PatientRegistrationDto;
-import org.junit.jupiter.api.*;
-import org.springframework.data.domain.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.stream.IntStream;
 
@@ -59,5 +63,18 @@ class PatientQueryRepositoryTest {
         Assertions.assertEquals(2, patients.get().count());
     }
 
+
+    @Test
+    void shouldReturnEmptyPageWhenNoMatchingPatientFound() {
+        //given
+        patientFacade.registerPatient(new PatientRegistrationDto("John", "Wick", "NY"));
+        int numberOfPages = 1;
+        int recordPerPage = 10;
+        Pageable pageRequest = PageRequest.of(numberOfPages, recordPerPage);
+        //when
+        Page<PatientDto> patients = patientQueryRepository.searchPatients("shouldFindNothing", pageRequest);
+        //then
+        Assertions.assertEquals(0, patients.get().count());
+    }
 
 }
