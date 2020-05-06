@@ -17,7 +17,7 @@ class CentralExceptionControllerAdvice {
     @ExceptionHandler(RuntimeException.class)
     ResponseEntity<ErrorMessage> handleRuntimeException(RuntimeException e) {
         ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
-        return new ResponseEntity(errorMessage, HttpStatus.NOT_FOUND);
+        return new ResponseEntity(errorMessage, HttpStatus.I_AM_A_TEAPOT);
     }
 
 
