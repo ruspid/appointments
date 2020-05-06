@@ -14,8 +14,8 @@ class AppointmentsConfiguration {
     }
 
     @Bean
-    AppointmentCommandService appointmentCommandService() {
-        return new AppointmentCommandServiceImpl(inmemoryRepository);
+    AppointmentFacade appointmentCommandService() {
+        return new AppointmentFacadeImpl(inmemoryRepository);
     }
 
 }

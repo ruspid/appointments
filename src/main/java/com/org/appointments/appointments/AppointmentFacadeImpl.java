@@ -5,7 +5,7 @@ import com.org.appointments.appointments.dto.AppointmentFormDto;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class AppointmentCommandServiceImpl implements AppointmentCommandService {
+public class AppointmentFacadeImpl implements AppointmentFacade {
 
     private final AppointmentsRepository appointmentsRepository;
 
@@ -17,7 +17,7 @@ public class AppointmentCommandServiceImpl implements AppointmentCommandService 
     @Override
     public AppointmentDto rescheduleAppointment(RescheduleAppointmentApplication application) {
         Appointment appointment = getAppointmentById(application.appointmentId);
-        if (!canRescheduleAppointment(appointment, application)) throw new RuntimeException();
+        if (!canRescheduleAppointment(appointment, application)) throw new AppointmentAccessException();
         appointment.setAppointmentTime(application.getNewAppointmentTime());
         appointmentsRepository.addAppointment(appointment);
         return appointment.dto();
@@ -26,7 +26,7 @@ public class AppointmentCommandServiceImpl implements AppointmentCommandService 
     @Override
     public void cancelAppointment(CancelAppointmentApplication application) {
         Appointment appointment = getAppointmentById(application.appointmentId);
-        if (!canCancelAppointment(appointment, application)) throw new RuntimeException();
+        if (!canCancelAppointment(appointment, application)) throw new AppointmentAccessException();
         appointmentsRepository.cancelAppointment(appointment.getAppointmentId());
     }
 

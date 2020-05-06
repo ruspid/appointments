@@ -17,13 +17,13 @@ class AppointmentQueryRepositoryTest {
 
 
     private AppointmentsConfiguration configuration;
-    private AppointmentCommandService appointmentCommandService;
+    private AppointmentFacade appointmentFacade;
     private AppointmentQueryRepository appointmentQueryRepository;
 
     @BeforeEach
     void resetTestData() {
         this.configuration = new AppointmentsConfiguration();
-        this.appointmentCommandService = configuration.appointmentCommandService();
+        this.appointmentFacade = configuration.appointmentCommandService();
         this.appointmentQueryRepository = configuration.appointmentQueryRepository();
 
     }
@@ -37,12 +37,12 @@ class AppointmentQueryRepositoryTest {
         int numberOdPatientAppointments = 20;
         IntStream.range(0, numberOdPatientAppointments)
                 .mapToObj(i -> this.patientAppointment(patientId))
-                .forEach(appointmentCommandService::scheduleAppointment);
+                .forEach(appointmentFacade::scheduleAppointment);
         //and
         int numberOfOtherAppointments = 10;
         IntStream.range(0, numberOfOtherAppointments)
                 .mapToObj(i -> this.patientAppointment(UUID.randomUUID().toString().substring(2)))//unique and different then @patientId
-                .forEach(appointmentCommandService::scheduleAppointment);
+                .forEach(appointmentFacade::scheduleAppointment);
 
         int numberOfPages = 1;
         int recordPerPage = 10;
@@ -63,7 +63,7 @@ class AppointmentQueryRepositoryTest {
         int numberOfAppointments = 27;
         IntStream.range(0, numberOfAppointments)
                 .mapToObj(i -> this.patientAppointment(UUID.randomUUID().toString().substring(1)))
-                .forEach(appointmentCommandService::scheduleAppointment);
+                .forEach(appointmentFacade::scheduleAppointment);
         //and
         int numberOfPage = 1;
         int recordPerPage = 10;

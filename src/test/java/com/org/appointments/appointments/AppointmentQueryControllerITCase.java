@@ -25,7 +25,7 @@ class AppointmentQueryControllerITCase {
     MockMvc mvc;
 
     @Autowired
-    AppointmentCommandService commandService;
+    AppointmentFacade commandService;
 
     @BeforeAll
     public void initTestData() {

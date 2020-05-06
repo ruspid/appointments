@@ -12,7 +12,7 @@ import java.net.URI;
 @RequiredArgsConstructor
 class AppointmentCRUDController {
 
-    private final AppointmentCommandService service;
+    private final AppointmentFacade service;
 
     @PostMapping(value = "/appointments")
     ResponseEntity<Void> scheduleAppointment(@RequestBody AppointmentFormDto dto) {
