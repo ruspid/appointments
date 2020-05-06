@@ -19,7 +19,7 @@ Service that will help potential patients schedule appointments in medical cente
 * microservices 
 ## Decision Outcome
 
-Chosen option: "modular-monolith", because business mentioned several applications
+Chosen option: "modular-monolith", because business mentioned plans for several applications in future
 
 ### Positive Consequences
 
